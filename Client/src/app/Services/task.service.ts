@@ -16,12 +16,12 @@ export class TaskService {
       .pipe();
   }
 
-  getVehicle(id: number) {
+  getTask(id: string) {
     return this.http.get(this.baseUrl + '/SystemTasks/' + id)
       .pipe();
   }
 
-  getVehicles(filter) {
+  getTasks(filter) {
     return this.http.get<Task[]>(this.baseUrl + '/SystemTasks/?' + this.toQueryString(filter))
       .pipe();
   }

@@ -1,3 +1,4 @@
+import { TaskService } from './../../Services/task.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +16,7 @@ export class NavBarComponent implements OnInit {
   curretnUser$: Observable<User>;
 
   constructor(public accountService: AccountService, private router: Router
-    ,private toastr: ToastrService) {
+    ,private toastr: ToastrService, private taskService:TaskService) {
   }
     
   ngOnInit(): void {
@@ -37,6 +38,11 @@ export class NavBarComponent implements OnInit {
 
   getCurrentUser(){
     this.curretnUser$ = this.accountService.currentUser$;
+  }
+
+  test(){
+    this.taskService.getTask("16dc415a-9e1a-41e4-234b-08d9c38653e4")
+      .subscribe(response => console.log(response));
   }
 
 }
