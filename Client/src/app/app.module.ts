@@ -13,13 +13,19 @@ import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { RegisterComponent } from './Components/register/register.component';
 import { HomeComponent } from './Components/home/home.component';
+import { TaskFormComponent } from './Components/task-form/task-form.component';
+import { TaskListComponent } from './Components/task-list/task-list.component';
+import { PaginationComponent } from './Components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    TaskFormComponent,
+    TaskListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

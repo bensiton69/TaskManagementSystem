@@ -10,7 +10,6 @@ import { AccountService } from './Services/account.service';
 })
 export class AppComponent {
   constructor(private http: HttpClient, private accountService: AccountService) { }
-  vehicles: any;
 
   ngOnInit(): void {
     this.setCurrentUser();

@@ -1,5 +1,4 @@
-export interface Task{
-    id: string;
+export interface SaveTask{
     title: string;
     description: string;
     status: number;

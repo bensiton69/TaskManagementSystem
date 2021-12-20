@@ -54,28 +54,28 @@ namespace TaskManagementSystem.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateVehicle(Guid id, SystemTask systemTask)
+        public async Task<IActionResult> UpdateSystemTask(Guid id, SystemTask systemTask)
         {
             //TODO: move to repository
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var vehicle = await _repository.GetSystemTask(id, includeRelated: true);
+            var task = await _repository.GetSystemTask(id, includeRelated: true);
 
-            if (vehicle == null)
+            if (task == null)
                 return NotFound();
 
             await _unitOfWork.CompleteAsync();
 
-            vehicle = await _repository.GetSystemTask(id, includeRelated: true);
-            return Ok(vehicle);
+            task = await _repository.GetSystemTask(id, includeRelated: true);
+            return Ok(task);
         }
 
-        // POST: api/SystemTasks
+                // POST: api/SystemTasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateVehicle(SystemTask systemTask)
+        public async Task<IActionResult> CreateSystemTask(SystemTask systemTask)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -92,10 +92,10 @@ namespace TaskManagementSystem.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteSystemTask(Guid id)
         {
-            var vehicle = await _repository.GetSystemTask(id, includeRelated: false);
-            if (vehicle == null)
+            var systemTask = await _repository.GetSystemTask(id, includeRelated: false);
+            if (systemTask == null)
                 return NotFound();
-            _repository.Remove(vehicle);
+            _repository.Remove(systemTask);
             await _unitOfWork.CompleteAsync();
             return Ok(id);
         }

@@ -5,10 +5,10 @@
         <ul class="navbar-nav mr-auto">
             <ng-container *ngIf="accountService.currentUser$ | async">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/Vehicles/new' routerLinkActive='active'>New Vehicle</a>
+                    <a class="nav-link" routerLink='/Task/New' routerLinkActive='active'>New Task</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/Vehicles' routerLinkActive='active'>Vehicles</a>
+                    <a class="nav-link" routerLink='/Tasks' routerLinkActive='active'>Tasks</a>
                 </li>
                 <li>
                     <button class="btn btn-primary" (click)="logout()">Logout</button>
