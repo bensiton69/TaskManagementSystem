@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TaskManagementSystem.Core;
 using TaskManagementSystem.Core.Models;
 using TaskManagementSystem.Persistence;
 
@@ -15,76 +16,75 @@ namespace TaskManagementSystem.Controllers
     [ApiController]
     public class SystemTasksController : ControllerBase
     {
-        private readonly DataContext _context;
-
-        public SystemTasksController(DataContext context)
+        private readonly ISystemTaskRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
+        public SystemTasksController(ISystemTaskRepository repository, IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
         // GET: api/SystemTasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SystemTask>>> GetSystemTask()
+        public async Task<QueryResult<SystemTask>> GetSystemTasks([FromQuery] SystemTaskQuery systemTaskQuery)
         {
-            return await _context.SystemTask.ToListAsync();
+            return await _repository.GetSystemTasks(systemTaskQuery);
         }
+
+
 
         // GET: api/SystemTasks/5
         [HttpGet("{id}")]
+        [Authorize]
+
         public async Task<ActionResult<SystemTask>> GetSystemTask(Guid id)
         {
-            var systemTask = await _context.SystemTask.FindAsync(id);
+            var systemTask = await _repository.GetSystemTask(id, true);
 
             if (systemTask == null)
             {
                 return NotFound();
             }
 
-            return systemTask;
+            return Ok(systemTask);
         }
+
 
         // PUT: api/SystemTasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutSystemTask(Guid id, SystemTask systemTask)
+        public async Task<IActionResult> UpdateVehicle(Guid id, SystemTask systemTask)
         {
-            if (id != systemTask.Id)
-            {
-                return BadRequest();
-            }
+            //TODO: move to repository
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            _context.Entry(systemTask).State = EntityState.Modified;
+            var vehicle = await _repository.GetSystemTask(id, includeRelated: true);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SystemTaskExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            if (vehicle == null)
+                return NotFound();
 
-            return NoContent();
+            await _unitOfWork.CompleteAsync();
+
+            vehicle = await _repository.GetSystemTask(id, includeRelated: true);
+            return Ok(vehicle);
         }
 
         // POST: api/SystemTasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<SystemTask>> PostSystemTask(SystemTask systemTask)
+        public async Task<IActionResult> CreateVehicle(SystemTask systemTask)
         {
-            _context.SystemTask.Add(systemTask);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return CreatedAtAction("GetSystemTask", new { id = systemTask.Id }, systemTask);
+
+            _repository.Add(systemTask);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(systemTask);
         }
 
         // DELETE: api/SystemTasks/5
@@ -92,21 +92,13 @@ namespace TaskManagementSystem.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteSystemTask(Guid id)
         {
-            var systemTask = await _context.SystemTask.FindAsync(id);
-            if (systemTask == null)
-            {
+            var vehicle = await _repository.GetSystemTask(id, includeRelated: false);
+            if (vehicle == null)
                 return NotFound();
-            }
-
-            _context.SystemTask.Remove(systemTask);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            _repository.Remove(vehicle);
+            await _unitOfWork.CompleteAsync();
+            return Ok(id);
         }
 
-        private bool SystemTaskExists(Guid id)
-        {
-            return _context.SystemTask.Any(e => e.Id == id);
-        }
     }
 }

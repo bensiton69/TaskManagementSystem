@@ -12,6 +12,8 @@ namespace TaskManagementSystem.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ISystemTaskRepository, SystemTaskRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContextPool<DataContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("TaskManagementSystemDBConnection")));
             return services;

@@ -10,8 +10,8 @@ using TaskManagementSystem.Persistence;
 namespace TaskManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211220054504_Init")]
-    partial class Init
+    [Migration("20211220065651_fixNameToSystemTasks")]
+    partial class fixNameToSystemTasks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace TaskManagementSystem.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskManagementSystem.Core.Models.SystemTasks", b =>
+            modelBuilder.Entity("TaskManagementSystem.Core.Models.SystemTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
