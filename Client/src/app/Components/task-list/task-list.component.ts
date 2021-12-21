@@ -26,6 +26,7 @@ export class TaskListComponent implements OnInit {
   
   columns = [
     { title: 'Urgent Level', key: 'urgentLevel', isSortable: true },
+    { title: 'Deadline', key: 'deadline', isSortable: true },
     { title: 'Title', key: 'title', isSortable: true },
     { title: 'Description', key: 'description', isSortable: true },
     { title: 'Status', key: 'status', isSortable: true },

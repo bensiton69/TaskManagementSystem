@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Core;
 using TaskManagementSystem.Core.Models;
+using TaskManagementSystem.DTOs;
 using TaskManagementSystem.Persistence;
 
 namespace TaskManagementSystem.Controllers
@@ -18,9 +20,12 @@ namespace TaskManagementSystem.Controllers
     {
         private readonly ISystemTaskRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
-        public SystemTasksController(ISystemTaskRepository repository, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public SystemTasksController(ISystemTaskRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
             _repository = repository;
         }
 
@@ -67,16 +72,21 @@ namespace TaskManagementSystem.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateSystemTask(SystemTask systemTask)
+        public async Task<IActionResult> CreateSystemTask(TaskDto systemTaskDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var systemTask = _mapper.Map<TaskDto, SystemTask>(systemTaskDto);
+
             systemTask.CreationDateTime = DateTime.Now;
+            //systemTask.Owner = await _repository.
             _repository.Add(systemTask);
             await _unitOfWork.CompleteAsync();
 
             return Ok(systemTask);
+
+            var tdoMappedAgain = _mapper.Map<SystemTask, TaskDto>(systemTask);
         }
 
         // DELETE: api/SystemTasks/5
