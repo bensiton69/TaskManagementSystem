@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/Services/account.service';
 import { TaskService } from './../../Services/task.service';
 import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
@@ -12,6 +13,14 @@ import { Task } from 'src/app/Interfaces/Task';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
+  model: any = {};
+
+  owners = [
+    "Ben",
+    "Mic",
+    "Aviram",
+    "Moti"
+  ];
 
   task: Task = {
     id: "",
@@ -20,6 +29,8 @@ export class TaskFormComponent implements OnInit {
     status: 0,
     urgentLevel: 0,
   };
+  
+  time = {}
 
   features: KeyValuePair[] = []
 
@@ -27,7 +38,8 @@ export class TaskFormComponent implements OnInit {
     private taskService: TaskService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) {
     route.params.subscribe(p => {
       this.task.id = p["id"];
@@ -40,6 +52,7 @@ export class TaskFormComponent implements OnInit {
 
   forkDataOnInit() {
     var sources: unknown[] = [
+      //this.getOwners(),
     ]
 
     if (this.task.id) {
@@ -48,32 +61,18 @@ export class TaskFormComponent implements OnInit {
 
     forkJoin(sources)
       .subscribe(values => {
+        //this.owners =values[0];
         if (this.task.id) {
           this.setTask(values[0]);
-          //this.populateModels();
         }
       });
   }
 
 
   onMakeChange() {
-    //this.populateModels();
-    //delete this.task.modelId;
+    console.log(this.model.owner);
+
   }
-
-  // private populateModels() {
-  //   var selectedMake = this.makes.find(m => m.id == this.task.makeId);
-  //   this.models = selectedMake ? selectedMake.models : [];
-  // }
-
-  // onFeatureToggle(featureId, $event) {
-  //   if ($event.target.checked)
-  //     this.task.features.push(featureId);
-  //   else {
-  //     var index = this.task.features.indexOf(featureId);
-  //     this.task.features.splice(index, 1);
-  //   }
-  // }
 
   submit() {
     if (this.task.id) {
@@ -95,6 +94,10 @@ export class TaskFormComponent implements OnInit {
 
   getTask() {
     return this.taskService.getTask(this.task.id);
+  }
+
+  getOwners() {
+    return this.accountService.getOwners();
   }
 
   private setTask(task: Task) {

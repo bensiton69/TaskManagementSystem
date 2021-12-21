@@ -16,6 +16,8 @@ import { HomeComponent } from './Components/home/home.component';
 import { TaskFormComponent } from './Components/task-form/task-form.component';
 import { TaskListComponent } from './Components/task-list/task-list.component';
 import { PaginationComponent } from './Components/pagination/pagination.component';
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { PaginationComponent } from './Components/pagination/pagination.componen
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatNativeDateModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),

@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using TaskManagementSystem.Extensions;
+using TaskManagementSystem.Mapping;
 
 namespace TaskManagementSystem
 {
@@ -34,6 +36,12 @@ namespace TaskManagementSystem
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TaskManagementSystem", Version = "v1" });
             });
             services.AddIdentityServices(Configuration);
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

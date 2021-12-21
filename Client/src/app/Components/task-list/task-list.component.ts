@@ -11,14 +11,24 @@ export class TaskListComponent implements OnInit {
 
   private readonly PAGE_SIZE = 3;
   queryResult: any = {};
+  model:any={};
   makes: KeyValuePair[];
   query: any = {
     pageSize: this.PAGE_SIZE
   };
+
+  owners = [
+    "Ben",
+    "Mic",
+    "Aviram",
+    "Moti"
+  ];
+  
   columns = [
-    { title: 'Id',key: 'id', isSortable: true },
+    { title: 'Urgent Level', key: 'urgentLevel', isSortable: true },
     { title: 'Title', key: 'title', isSortable: true },
     { title: 'Description', key: 'description', isSortable: true },
+    { title: 'Status', key: 'status', isSortable: true },
     {}
   ];
 

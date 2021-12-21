@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using TaskManagementSystem.Core.Models;
 
 namespace TaskManagementSystem.Core
 {
@@ -8,5 +10,8 @@ namespace TaskManagementSystem.Core
         public string UserName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        //TODO: remove
+        ICollection<SystemTask> SystemTasks { get; set; }
     }
 }

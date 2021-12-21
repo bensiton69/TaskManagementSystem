@@ -1,19 +1,15 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using TaskManagementSystem.Core.Models;
 
-namespace TaskManagementSystem.Core.Models
+namespace TaskManagementSystem.DTOs
 {
-    public class SystemTask
+    public class TaskDto
     {
-        [Key]
-        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public eStatus Status { get; set; }
         public eUrgentLevel UrgentLevel { get; set; }
-        public DateTime CreationDateTime { get; set; }
         public DateTime Deadline { get; set; }
-        public AppUser Owner { get; set; }
         public Guid OwnerId { get; set; }
     }
 }

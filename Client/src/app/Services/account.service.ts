@@ -11,9 +11,18 @@ export class AccountService {
   baseUrl = 'https://localhost:5001/api/';
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
-
+  owners = [
+    "Ben",
+    "Mic",
+    "Aviram",
+    "Moti"
+  ]
+  
   constructor(private http: HttpClient) { }
 
+  getOwners() {
+    return this.owners;
+  }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
@@ -46,6 +55,5 @@ export class AccountService {
         }
       })
     );
-
   }
 }

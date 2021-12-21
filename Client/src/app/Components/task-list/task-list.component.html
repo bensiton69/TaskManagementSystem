@@ -10,8 +10,17 @@
       <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
     </select>
   </div>
+  <div class="form-group">
+    <label for="make">Owner</label>
+    <select id="make" class="form-control" [(ngModel)]="model.owner" name="owner" required
+      #owner="ngModel">
+      <option value=""></option>
+      <option *ngFor="let o of owners" [value]="o">{{o}}</option>
+    </select>
+  </div>
   <button class="btn btn-default" (click)="resetFilter()">Reset</button>
 </div>
+
 <table class="table">
   <thead>
     <tr>
@@ -29,13 +38,15 @@
   </thead>
   <tbody>
     <tr *ngFor="let v of queryResult.items">
-      <td>{{ v.id }}</td>
+      <td>{{ v.urgentLevel }}</td>
       <td>{{ v.title }}</td>
       <td>{{ v.description }}</td>
+      <td>{{ v.status }}</td>
       <td>
         <a [routerLink]="['/Task/', v.id]">View</a>
       </td>
     </tr>
   </tbody>
 </table>
-<app-pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></app-pagination> 
+<app-pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize"
+  (page-changed)="onPageChange($event)"></app-pagination>

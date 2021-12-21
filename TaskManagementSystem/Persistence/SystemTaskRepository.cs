@@ -73,7 +73,7 @@ namespace TaskManagementSystem.Persistence
 
             return result;
         }
-        public async void UpdateTask(Guid id, SystemTask task)
+        public void UpdateTask(Guid id, SystemTask task)
         {
             _context.Entry(task).State = EntityState.Modified;
         }

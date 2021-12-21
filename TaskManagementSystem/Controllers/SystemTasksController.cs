@@ -56,8 +56,6 @@ namespace TaskManagementSystem.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateSystemTask(Guid id, SystemTask systemTask)
         {
-            //TODO: move to repository
-
             _repository.UpdateTask(id, systemTask);
             await _unitOfWork.CompleteAsync();
 
@@ -74,7 +72,7 @@ namespace TaskManagementSystem.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-
+            systemTask.CreationDateTime = DateTime.Now;
             _repository.Add(systemTask);
             await _unitOfWork.CompleteAsync();
 
