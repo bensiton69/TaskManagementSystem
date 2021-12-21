@@ -10,6 +10,7 @@ namespace TaskManagementSystem.Core
         Task<SystemTask> GetSystemTask(Guid id, bool includeRelated);
         void Add(SystemTask systemTask);
         void Remove(SystemTask systemTask);
+        void UpdateTask(Guid id, SystemTask task);
 
         Task<QueryResult<SystemTask>> GetSystemTasks(SystemTaskQuery filter);
     }

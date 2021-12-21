@@ -44,13 +44,12 @@ export class TaskFormComponent implements OnInit {
 
     if (this.task.id) {
       sources.push(this.getTask());
-      console.log(this.task.id);
     }
 
     forkJoin(sources)
       .subscribe(values => {
         if (this.task.id) {
-          this.setVehicle(values[0]);
+          this.setTask(values[0]);
           //this.populateModels();
         }
       });
@@ -80,10 +79,11 @@ export class TaskFormComponent implements OnInit {
     if (this.task.id) {
       this.taskService.update(this.task).subscribe(x => {
         console.log(x);
+        console.log(this.task);
         this.toastr.success("Edited");
       });
     } else {
-      this.task.id = "";
+      delete this.task.id;
       this.taskService.create(this.task)
         .subscribe(x => this.toastr.success("Created"));
     }
@@ -97,8 +97,7 @@ export class TaskFormComponent implements OnInit {
     return this.taskService.getTask(this.task.id);
   }
 
-  private setVehicle(task: Task) {
-    console.log(task);
+  private setTask(task: Task) {
     this.task.id = task.id;
     this.task.title = task.title;
     this.task.description = task.description;

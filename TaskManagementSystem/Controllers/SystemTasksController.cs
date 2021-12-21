@@ -57,21 +57,15 @@ namespace TaskManagementSystem.Controllers
         public async Task<IActionResult> UpdateSystemTask(Guid id, SystemTask systemTask)
         {
             //TODO: move to repository
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
-            var task = await _repository.GetSystemTask(id, includeRelated: true);
-
-            if (task == null)
-                return NotFound();
-
+            _repository.UpdateTask(id, systemTask);
             await _unitOfWork.CompleteAsync();
 
-            task = await _repository.GetSystemTask(id, includeRelated: true);
-            return Ok(task);
+            return Ok(systemTask);
+
         }
 
-                // POST: api/SystemTasks
+        // POST: api/SystemTasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]

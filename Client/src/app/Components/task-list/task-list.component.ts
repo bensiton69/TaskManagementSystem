@@ -19,7 +19,6 @@ export class TaskListComponent implements OnInit {
     { title: 'Id',key: 'id', isSortable: true },
     { title: 'Title', key: 'title', isSortable: true },
     { title: 'Description', key: 'description', isSortable: true },
-    { title: 'Model', key: 'model', isSortable: true },
     {}
   ];
 

@@ -27,6 +27,8 @@ export class TaskService {
   }
 
   update(task: Task) {
+    console.log("from service");
+    console.log(task);
     return this.http.put(this.baseUrl + /SystemTasks/ + task.id, task)
       .pipe();
   }

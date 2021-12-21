@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe(response => {
-      this.router.navigateByUrl('/Vehicles');
+      this.router.navigateByUrl('/Tasks');
     }, error => {
       console.log(error);
       this.toastr.error(error.error);
