@@ -6,11 +6,17 @@ using TaskManagementSystem.Core.Models;
 
 namespace TaskManagementSystem.Controllers
 {
+    /// <summary>
+    ///
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class FeaturesController : ControllerBase
     {
-
+        /// <summary>
+        /// Endpoint to return the types of status enum
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Statuses")]
         public IEnumerable<string> GetStatuses()
         {
@@ -18,7 +24,10 @@ namespace TaskManagementSystem.Controllers
                 .Cast<eStatus>()
                 .Select(v => v.ToString());
         }
-
+        /// <summary>
+        /// Endpoint to return the types of UrgentLevel enum
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("UrgentLevel")]
         public IEnumerable<string> GetUrgentLevel()
         {

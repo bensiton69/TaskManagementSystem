@@ -10,6 +10,10 @@ using TaskManagementSystem.Persistence;
 
 namespace TaskManagementSystem.Controllers
 {
+    /// <summary>
+    /// This controller is basic for Reregistration and login,
+    /// provides JW token using our Token Service
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -21,7 +25,11 @@ namespace TaskManagementSystem.Controllers
             _tokenService = tokenService;
             _context = context;
         }
-
+        /// <summary>
+        /// Method for user Reregistration
+        /// </summary>
+        /// <param name="registerDto"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(LoginDto registerDto)
         {

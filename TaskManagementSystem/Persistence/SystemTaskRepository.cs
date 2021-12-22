@@ -46,7 +46,7 @@ namespace TaskManagementSystem.Persistence
             var result = new QueryResult<SystemTask>();
             var query = _context.SystemTasks.Include(s => s.Owner)
                 .AsQueryable();
-            //TODO parse?
+            
             //Filtering
             if (String.IsNullOrEmpty(queryObj.UserName) == false)
                 query = query.Where(s => s.Owner.UserName == queryObj.UserName);

@@ -14,6 +14,9 @@ using TaskManagementSystem.Persistence;
 
 namespace TaskManagementSystem.Controllers
 {
+    /// <summary>
+    /// Controller for tasks, users AutoMapper, Repository pattern, UnitOfWork etc. 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SystemTasksController : ControllerBase
@@ -35,7 +38,6 @@ namespace TaskManagementSystem.Controllers
         {
             return await _repository.GetSystemTasks(systemTaskQuery);
         }
-
 
 
         // GET: api/SystemTasks/5
@@ -79,7 +81,6 @@ namespace TaskManagementSystem.Controllers
             var systemTask = _mapper.Map<TaskDto, SystemTask>(systemTaskDto);
 
             systemTask.CreationDateTime = DateTime.Today;
-            //systemTask.Deadline = DateTime.Now + TimeSpan.FromDays(8);
 
             _repository.Add(systemTask);
             await _unitOfWork.CompleteAsync();

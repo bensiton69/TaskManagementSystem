@@ -1,3 +1,4 @@
+import { DateTimeService } from './../../Services/date-time.service';
 import { AccountService } from 'src/app/Services/account.service';
 import { TaskService } from './../../Services/task.service';
 import { Component, OnInit } from '@angular/core';
@@ -35,6 +36,7 @@ export class TaskFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
+    private dateTimeService:DateTimeService,
     private featuresService: FeaturesService,) {
     route.params.subscribe(p => {
       this.task.id = p["id"];
@@ -78,15 +80,14 @@ export class TaskFormComponent implements OnInit {
   }
 
 
-  onDateChange() {
-    this.task.deadline = `${this.model.year}-${this.model.month}-${this.model.day}`;
+  formatDate() {
+    this.task.deadline = this.dateTimeService.formatDate(this.model);
   }
 
-  onMakeChange() {
-  }
 
   submit() {
     this.numberizeFields();
+    this.formatDate();
     console.log(this.task);
     if (this.task.id) {
       this.taskService.update(this.task).subscribe(x => {
@@ -94,8 +95,6 @@ export class TaskFormComponent implements OnInit {
       });
     } else {
       delete this.task.id;
-      delete this.task.deadline;
-      this.Test();
       this.taskService.create(this.task)
         .subscribe(x => this.toastr.success("Created"));
     }
@@ -103,7 +102,8 @@ export class TaskFormComponent implements OnInit {
   }
 
   Test() {
-
+    this.formatDate();
+    console.log(this.model);
   }
 
   numberizeFields() {

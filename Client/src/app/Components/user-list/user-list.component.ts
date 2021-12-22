@@ -1,3 +1,4 @@
+import { DateTimeService } from './../../Services/date-time.service';
 import { StatisticsService } from './../../Services/statistics.service';
 import { Component, OnInit } from '@angular/core';
 import { KeyValuePair } from 'src/app/Interfaces/KeyVakuePair';
@@ -11,6 +12,7 @@ import { TaskService } from 'src/app/Services/task.service';
 })
 export class UserListComponent implements OnInit {
   responce: any;
+  model: any = {};
 
   columns = [
     { title: 'Place', key: 'place', isSortable: false },
@@ -21,10 +23,15 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private statisticsService: StatisticsService,
-    private taskService: TaskService,
-    private accountService: AccountService) { }
+    private dateTimeService: DateTimeService,
+  ) { }
 
   ngOnInit() {
+
+  }
+
+  submit() {
+    this.formatDates();
     this.getStats();
   }
 
@@ -33,6 +40,11 @@ export class UserListComponent implements OnInit {
       this.responce = val;
       console.log(this.responce);
     })
+  }
+
+  formatDates() {
+    this.model.start = this.dateTimeService.formatDate(this.model.start)
+    this.model.end = this.dateTimeService.formatDate(this.model.end)
   }
 
 }

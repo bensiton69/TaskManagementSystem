@@ -1,18 +1,47 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th *ngFor="let c of columns">
-                <div>
-                    {{ c.title }}
+<div>
+<div>
+    <label for="date">From</label>
+    <form class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" name="dpstart" [(ngModel)]="model.start" ngbDatepicker required
+                    #dStart="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="dStart.toggle()" type="button"></button>
                 </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let r of responce; let i = index">
-            <td>{{ i+1 }}</td>
-            <td>{{ r.count }}</td>
-            <td>{{ r.object }}</td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+        </div>
+    </form>
+    <div>
+        <label for="date">To</label>
+        <form class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" name="dpend" [(ngModel)]="model.end" ngbDatepicker required
+                        #dEnd="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="dEnd.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <button class="btn btn-primary" (click)="submit()">Run</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th *ngFor="let c of columns">
+                    <div>
+                        {{ c.title }}
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of responce; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ r.object }}</td>
+                <td>{{ r.count }}</td>
+            </tr>
+        </tbody>
+    </table>

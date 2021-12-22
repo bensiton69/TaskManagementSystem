@@ -106,6 +106,7 @@ namespace TaskManagementSystem.Controllers
         public async Task<ActionResult> TestDefault(DateTime b,
             DateTime ? a = null)
         {
+            return Unauthorized();
             if (!a.HasValue)
                 a = DateTime.Now.AddDays(14);
             return Ok(a);

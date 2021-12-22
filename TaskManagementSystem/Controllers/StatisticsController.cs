@@ -10,6 +10,9 @@ using TaskManagementSystem.Persistence;
 
 namespace TaskManagementSystem.Controllers
 {
+    /// <summary>
+    /// Statistics controller, Uses UsersComparingService
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class StatisticsController : ControllerBase
