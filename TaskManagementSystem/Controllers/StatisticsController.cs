@@ -27,6 +27,12 @@ namespace TaskManagementSystem.Controllers
             _comparingService = comparingService;
         }
 
+        /// <summary>
+        /// Uses the comparing service
+        /// </summary>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetStatistics(DateTime startDateTime, DateTime endDateTime)
         {

@@ -27,14 +27,9 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-  }
-
-  submit() {
-    this.formatDates();
     this.getStats();
   }
-
+  
   getStats() {
     this.statisticsService.getStats().subscribe(val => {
       this.responce = val;
@@ -42,9 +37,5 @@ export class UserListComponent implements OnInit {
     })
   }
 
-  formatDates() {
-    this.model.start = this.dateTimeService.formatDate(this.model.start)
-    this.model.end = this.dateTimeService.formatDate(this.model.end)
-  }
 
 }

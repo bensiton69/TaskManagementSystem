@@ -2,6 +2,7 @@ import { AccountService } from 'src/app/Services/account.service';
 import { TaskService } from './../../Services/task.service';
 import { Component, OnInit } from '@angular/core';
 import { KeyValuePair } from 'src/app/Interfaces/KeyVakuePair';
+import { FeaturesService } from 'src/app/Services/features.service';
 
 @Component({
   selector: 'app-task-list',
@@ -30,7 +31,10 @@ export class TaskListComponent implements OnInit {
     {}
   ];
 
-  constructor(private taskService: TaskService, private accountService: AccountService) { }
+  constructor(
+    private taskService: TaskService,
+    private accountService: AccountService,
+    private featuresService: FeaturesService,) { }
 
   ngOnInit() {
     this.getTasks();

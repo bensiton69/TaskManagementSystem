@@ -15,7 +15,7 @@ using TaskManagementSystem.Persistence;
 namespace TaskManagementSystem.Controllers
 {
     /// <summary>
-    /// Controller for tasks, users AutoMapper, Repository pattern, UnitOfWork etc. 
+    /// Controller for tasks, uses AutoMapper, Repository pattern, UnitOfWork etc. 
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -32,7 +32,6 @@ namespace TaskManagementSystem.Controllers
             _repository = repository;
         }
 
-        // GET: api/SystemTasks
         [HttpGet]
         public async Task<QueryResult<TaskDto>> GetSystemTasks([FromQuery] SystemTaskQuery systemTaskQuery)
         {
@@ -40,7 +39,6 @@ namespace TaskManagementSystem.Controllers
         }
 
 
-        // GET: api/SystemTasks/5
         [HttpGet("{id}")]
 
         public async Task<ActionResult<SystemTask>> GetSystemTask(Guid id)
@@ -56,8 +54,6 @@ namespace TaskManagementSystem.Controllers
         }
 
 
-        // PUT: api/SystemTasks/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> UpdateSystemTask(Guid id, SystemTask systemTask)
@@ -69,8 +65,6 @@ namespace TaskManagementSystem.Controllers
 
         }
 
-        // POST: api/SystemTasks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateSystemTask(TaskDto systemTaskDto)
@@ -89,7 +83,6 @@ namespace TaskManagementSystem.Controllers
 
         }
 
-        // DELETE: api/SystemTasks/5
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteSystemTask(Guid id)

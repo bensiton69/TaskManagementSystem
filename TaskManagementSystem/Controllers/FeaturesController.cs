@@ -7,7 +7,7 @@ using TaskManagementSystem.Core.Models;
 namespace TaskManagementSystem.Controllers
 {
     /// <summary>
-    ///
+    /// Controller that returns the enums as IEnumerable of strings
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

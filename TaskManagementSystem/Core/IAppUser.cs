@@ -11,7 +11,6 @@ namespace TaskManagementSystem.Core
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        //TODO: remove
         ICollection<SystemTask> SystemTasks { get; set; }
     }
 }

@@ -11,6 +11,9 @@ using TaskManagementSystem.Persistence;
 
 namespace TaskManagementSystem.Controllers
 {
+    /// <summary>
+    /// Controller for the authorized users in system
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
