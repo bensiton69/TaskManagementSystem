@@ -40,9 +40,5 @@ export class NavBarComponent implements OnInit {
     this.curretnUser$ = this.accountService.currentUser$;
   }
 
-  test(){
-    this.taskService.getTask("16dc415a-9e1a-41e4-234b-08d9c38653e4")
-      .subscribe(response => console.log(response));
-  }
 
 }

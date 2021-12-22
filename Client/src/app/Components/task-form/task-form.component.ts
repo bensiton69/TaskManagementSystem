@@ -101,10 +101,6 @@ export class TaskFormComponent implements OnInit {
     this.router.navigate(['/Tasks']);
   }
 
-  Test() {
-    this.formatDate();
-    console.log(this.model);
-  }
 
   numberizeFields() {
     this.task.status = Number(this.task.status);
