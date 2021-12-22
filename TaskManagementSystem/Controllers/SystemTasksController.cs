@@ -78,8 +78,9 @@ namespace TaskManagementSystem.Controllers
 
             var systemTask = _mapper.Map<TaskDto, SystemTask>(systemTaskDto);
 
-            systemTask.CreationDateTime = DateTime.Now;
-            //systemTask.Owner = await _repository.
+            systemTask.CreationDateTime = DateTime.Today;
+            //systemTask.Deadline = DateTime.Now + TimeSpan.FromDays(8);
+
             _repository.Add(systemTask);
             await _unitOfWork.CompleteAsync();
 

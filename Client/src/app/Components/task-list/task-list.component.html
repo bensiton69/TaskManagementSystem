@@ -2,16 +2,26 @@
 <p>
   <a [routerLink]="['/Task/new']" class="btn btn-primary">New Task</a>
 </p>
-<div class="well">
-  <div class="form-group">
+<div class="form-inline">
+  <div class="form-group ">
+    <label for="owner" class="mx-sm-1">Owner</label>
+    <select id="owner" class="form-control" [(ngModel)]="query.userName"  (change)="onFilterChange()" name="owner" 
+      #owner="ngModel">
+      <option value=""></option>
+      <option *ngFor="let o of users" [value]="o.name">{{o.name}}</option>
+    </select>
+    
+  </div>
+  <div class="form-group mx-sm-5">
     <label for="owner">Owner</label>
     <select id="owner" class="form-control" [(ngModel)]="query.userName"  (change)="onFilterChange()" name="owner" 
       #owner="ngModel">
       <option value=""></option>
       <option *ngFor="let o of users" [value]="o.name">{{o.name}}</option>
     </select>
+    
   </div>
-  <button class="btn btn-default" (click)="resetFilter()">Reset</button>
+  <button type="button" class="btn btn-success"  (click)="resetFilter()">Reset</button>
 </div>
 
 <table class="table">

@@ -1,8 +1,9 @@
-export interface Task{
+export interface Task {
     id: string;
     title: string;
     description: string;
     status: number;
     urgentLevel: number;
-    ownerId:string;
+    ownerId: string;
+    deadline: string;
 }

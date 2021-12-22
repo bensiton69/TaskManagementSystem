@@ -28,9 +28,10 @@ export class TaskFormComponent implements OnInit {
     description: "",
     status: 0,
     urgentLevel: 0,
-    ownerId: "90f19746-cda2-41d2-695a-08d9c482c6d1",
+    ownerId: "13119e87-53d7-40e2-6abf-08d9c521d771",
+    deadline:"",
   };
-  
+
   time = {}
 
   features: KeyValuePair[] = []
@@ -68,11 +69,14 @@ export class TaskFormComponent implements OnInit {
         }
       });
   }
-
+  onDateChange() {
+    this.task.deadline = `${this.model.year}-${this.model.month}-${this.model.day}`;
+    console.log(this.time);
+    
+  }
 
   onMakeChange() {
     console.log(this.model.owner);
-
   }
 
   submit() {
@@ -85,10 +89,10 @@ export class TaskFormComponent implements OnInit {
       this.taskService.create(this.task)
         .subscribe(x => this.toastr.success("Created"));
     }
+    this.router.navigate(['/Tasks']);
   }
 
   Test() {
-    this.toastr.success("success");
   }
 
   getTask() {
@@ -109,10 +113,9 @@ export class TaskFormComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.taskService.delete(this.task.id)
         .subscribe(x => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/Tasks']);
         })
     }
-
   }
 
 }
