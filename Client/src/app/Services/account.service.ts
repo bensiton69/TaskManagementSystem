@@ -22,9 +22,9 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<KeyValuePair[]>{
+  getUsers(): Observable<KeyValuePair[]> {
     return this.http.get<KeyValuePair[]>(this.baseUrl + 'Users')
-    .pipe();
+      .pipe();
   }
 
   login(model: any) {
@@ -49,21 +49,21 @@ export class AccountService {
   }
 
   getUserName(): string {
-    this.currentUser$.subscribe(val =>this.username = val.username);
+    this.currentUser$.subscribe(val => this.username = val.username);
     return this.username;
-}
+  }
 
-register(model: any) {
-  return this.http.post(this.baseUrl + 'account/register', model).pipe(
-    map((response: User) => {
-      const user = response;
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
-      }
-    })
-  );
-}
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((response: User) => {
+        const user = response;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
 
 
 }

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Components/home/home.component';
 import { TaskFormComponent } from './Components/task-form/task-form.component';
+import { UserListComponent } from './Components/user-list/user-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
        { path: 'Task/New', component: TaskFormComponent },
        { path: 'Task/:id', component: TaskFormComponent },
        { path: 'Tasks', component: TaskListComponent },
+       { path: 'Statistics', component: UserListComponent },
     ]
     , canActivate:[AuthGuard]},
 

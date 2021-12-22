@@ -17,6 +17,7 @@ import { TaskFormComponent } from './Components/task-form/task-form.component';
 import { TaskListComponent } from './Components/task-list/task-list.component';
 import { PaginationComponent } from './Components/pagination/pagination.component';
 import {MatNativeDateModule} from '@angular/material/core';
+import { UserListComponent } from './Components/user-list/user-list.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     HomeComponent,
     TaskFormComponent,
     TaskListComponent,
-    PaginationComponent
+    PaginationComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
