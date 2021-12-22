@@ -13,6 +13,7 @@ namespace TaskManagementSystem.Extensions
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ISystemTaskRepository, SystemTaskRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContextPool<DataContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("TaskManagementSystemDBConnection")));

@@ -4,18 +4,11 @@
 </p>
 <div class="well">
   <div class="form-group">
-    <label for="make">Make</label>
-    <select id="make" class="form-control" [(ngModel)]="query.makeId" (change)="onFilterChange()">
-      <option value=""></option>
-      <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="make">Owner</label>
-    <select id="make" class="form-control" [(ngModel)]="model.owner" name="owner" required
+    <label for="owner">Owner</label>
+    <select id="owner" class="form-control" [(ngModel)]="query.userName"  (change)="onFilterChange()" name="owner" 
       #owner="ngModel">
       <option value=""></option>
-      <option *ngFor="let o of owners" [value]="o">{{o}}</option>
+      <option *ngFor="let o of users" [value]="o.name">{{o.name}}</option>
     </select>
   </div>
   <button class="btn btn-default" (click)="resetFilter()">Reset</button>
@@ -37,14 +30,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let v of queryResult.items">
-      <td>{{ v.urgentLevel }}</td>
-      <td>{{ v.deadline }}</td>
-      <td>{{ v.title }}</td>
-      <td>{{ v.description }}</td>
-      <td>{{ v.status }}</td>
+    <tr *ngFor="let t of queryResult.items">
+      <td>{{ t.urgentLevel }}</td>
+      <td>{{ t.ownerUserName }}</td>
+      <td>{{ t.deadline }}</td>
+      <td>{{ t.title }}</td>
+      <td>{{ t.description }}</td>
+      <td>{{ t.status }}</td>
       <td>
-        <a [routerLink]="['/Task/', v.id]">View</a>
+        <a [routerLink]="['/Task/', t.id]">View</a>
       </td>
     </tr>
   </tbody>

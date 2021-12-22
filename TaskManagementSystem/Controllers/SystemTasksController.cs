@@ -31,7 +31,7 @@ namespace TaskManagementSystem.Controllers
 
         // GET: api/SystemTasks
         [HttpGet]
-        public async Task<QueryResult<SystemTask>> GetSystemTasks([FromQuery] SystemTaskQuery systemTaskQuery)
+        public async Task<QueryResult<TaskDto>> GetSystemTasks([FromQuery] SystemTaskQuery systemTaskQuery)
         {
             return await _repository.GetSystemTasks(systemTaskQuery);
         }
@@ -40,7 +40,6 @@ namespace TaskManagementSystem.Controllers
 
         // GET: api/SystemTasks/5
         [HttpGet("{id}")]
-        [Authorize]
 
         public async Task<ActionResult<SystemTask>> GetSystemTask(Guid id)
         {
@@ -86,7 +85,6 @@ namespace TaskManagementSystem.Controllers
 
             return Ok(systemTask);
 
-            var tdoMappedAgain = _mapper.Map<SystemTask, TaskDto>(systemTask);
         }
 
         // DELETE: api/SystemTasks/5

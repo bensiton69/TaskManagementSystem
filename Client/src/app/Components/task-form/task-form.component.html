@@ -4,11 +4,10 @@
 <form #f="ngForm" (ngSubmit)="submit()">
     <div class="form-group">
         <label for="make">Owner</label>
-        <select id="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="model.owner" name="owner" required #owner="ngModel">
+        <select id="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="model.owner" name="owner" #owner="ngModel">
             <option value=""></option>
             <option *ngFor="let o of owners" [value]="o">{{o}}</option>
         </select>
-        <div class="alert alert-danger" *ngIf="owner.touched && !owner.valid">Please specify the Make!</div>
     </div>
     <div>
         <label for="date">Deadline</label>

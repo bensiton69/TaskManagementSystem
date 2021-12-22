@@ -4,4 +4,5 @@ export interface Task{
     description: string;
     status: number;
     urgentLevel: number;
+    ownerId:string;
 }

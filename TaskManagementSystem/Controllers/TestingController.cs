@@ -26,75 +26,81 @@ namespace TaskManagementSystem.Controllers
             _mapper = mapper;
         }
 
+        //[HttpPost("Exception")]
+        //public ActionResult<string> ExceptionCreate()
+        //{
+        //    Guid id = Guid.Parse("-1");
+        //    return _context.Users.Find(id).ToString();
+        //}
 
-        [HttpPost("/TaskCreate")]
-        public async Task<IActionResult> TaskCreate()
-        {
-            Guid id = Guid.Parse("90f19746-cda2-41d2-695a-08d9c482c6d1");
-            var user = await _context.Users.FindAsync(id);
-            SystemTask systemTask = new SystemTask()
-            {
-                Title = "with times creation time",
-                Description = "stam",
-                Status = eStatus.Done,
-                UrgentLevel = eUrgentLevel.Medium,
-            };
+        //[HttpPost("TaskCreate")]
+        //public async Task<IActionResult> TaskCreate()
+        //{
+        //    Guid id = Guid.Parse("90f19746-cda2-41d2-695a-08d9c482c6d1");
+        //    var user = await _context.Users.FindAsync(id);
+        //    SystemTask systemTask = new SystemTask()
+        //    {
+        //        Title = "with times creation time",
+        //        Description = "stam",
+        //        Status = eStatus.Done,
+        //        UrgentLevel = eUrgentLevel.Medium,
+        //    };
 
-            await _context.SystemTasks.AddAsync(systemTask);
+        //    await _context.SystemTasks.AddAsync(systemTask);
 
-            return Ok(systemTask);
-        }
+        //    return Ok(systemTask);
+        //}
 
-        [HttpPost("/Test")]
-        public async Task<IActionResult> PostTest()
-        {
-            Guid id = Guid.Parse("90f19746-cda2-41d2-695a-08d9c482c6d1");
-            var user = await _context.Users.FindAsync(id);
+        //[HttpPost("Test")]
+        //public async Task<IActionResult> PostTest()
+        //{
+        //    Guid id = Guid.Parse("90f19746-cda2-41d2-695a-08d9c482c6d1");
+        //    var user = await _context.Users.FindAsync(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            //return Ok(user);
+        //    //return Ok(user);
 
-            user.SystemTasks.Add(new SystemTask(){ Title = "Othello" });
-            _context.Attach(user);
-            _context.Entry(user).Collection(x => x.SystemTasks).IsModified = true;
-            _context.SaveChanges();
-            return Ok();
-        }
+        //    user.SystemTasks.Add(new SystemTask(){ Title = "Othello" });
+        //    _context.Attach(user);
+        //    _context.Entry(user).Collection(x => x.SystemTasks).IsModified = true;
+        //    _context.SaveChanges();
+        //    return Ok();
+        //}
 
-        [HttpGet("GetUsers")]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
-        {
+        //[HttpGet("GetUsers")]
+        //public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        //{
 
-            // From AppUser to userMeetingDTO
-            // From SystemTask to TaskDto 
-            var users = await _context.Users.Include(x => x.SystemTasks).ToListAsync();
-            var newUsersDTOs = new List<UserTaskDto>();
-            foreach (AppUser user in users)
-            {
-                var taskDtos = new List<TaskDto>();
-                foreach (SystemTask userMeeting in user.SystemTasks)
-                {
-                    taskDtos.Add(new TaskDto() { Title = userMeeting.Title, OwnerId = userMeeting.OwnerId });
-                }
+        //    // From AppUser to userMeetingDTO
+        //    // From SystemTask to TaskDto 
+        //    var users = await _context.Users.Include(x => x.SystemTasks).ToListAsync();
+        //    var newUsersDTOs = new List<UserTaskDto>();
+        //    foreach (AppUser user in users)
+        //    {
+        //        var taskDtos = new List<TaskDto>();
+        //        foreach (SystemTask userMeeting in user.SystemTasks)
+        //        {
+        //            taskDtos.Add(new TaskDto() { Title = userMeeting.Title, OwnerId = userMeeting.OwnerId });
+        //        }
 
-                newUsersDTOs.Add(new UserTaskDto() { Username = user.UserName,SystemTasks = taskDtos });
-            }
+        //        newUsersDTOs.Add(new UserTaskDto() { Username = user.UserName,SystemTasks = taskDtos });
+        //    }
 
-            return Ok(newUsersDTOs);
-        }
+        //    return Ok(newUsersDTOs);
+        //}
 
-        [HttpGet("GetTasks")]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetTasks()
-        {
-            var result = _context.SystemTasks
-                .AsQueryable();
+        //[HttpGet("GetTasks")]
+        //public async Task<ActionResult<IEnumerable<AppUser>>> GetTasks()
+        //{
+        //    var result = _context.SystemTasks
+        //        .AsQueryable();
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpGet("TestMap")]
         public async Task<ActionResult> TestMap()
@@ -107,6 +113,8 @@ namespace TaskManagementSystem.Controllers
                 return NotFound();
             }
 
+            var allTasks =  _context.SystemTasks.Include(x => x.Owner).AsEnumerable();
+            var mappedTaskDtos = _mapper.Map<IEnumerable<SystemTask>, IEnumerable<TaskDto>>(allTasks);
             var mappedCollection = _mapper.Map<ICollection<SystemTask>, List<TaskDto>>(user.SystemTasks);
 
             var mappedUsersCollection = _mapper.Map<ICollection<AppUser>, List<UserTaskDto>>(await _context.Users.ToListAsync());
@@ -117,7 +125,7 @@ namespace TaskManagementSystem.Controllers
             //SystemTask systemTask = await _context.SystemTasks.FirstAsync();
             //var mappedTask = _mapper.Map<SystemTask, TaskDto>(systemTask);
 
-            return Ok(mappedUsersCollection);
+            return Ok(mappedTaskDtos);
 
         }
     }

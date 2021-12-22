@@ -10,7 +10,12 @@ namespace TaskManagementSystem.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<SystemTask, TaskDto>();
+            CreateMap<AppUser, KeyValuePairDto>()
+                .ForMember(kvp => kvp.Name, opt => opt.MapFrom(a => a.UserName));
+            CreateMap<SystemTask, TaskDto>()
+                .ForMember(t => t.OwnerUserName, opt => opt.MapFrom(s => s.Owner.UserName));
+            CreateMap<QueryResult<SystemTask>, QueryResult<TaskDto>>()
+                .ForMember(qt => qt.Items, opt => opt.MapFrom(qs => qs.Items));
             CreateMap<AppUser, UserTaskDto>()
                 .ForMember(u => u.SystemTasks, opt => opt.MapFrom(a => a.SystemTasks));
 

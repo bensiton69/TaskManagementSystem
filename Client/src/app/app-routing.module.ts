@@ -1,3 +1,4 @@
+import { AuthGuard } from './Guards/auth.guard';
 import { TaskListComponent } from './Components/task-list/task-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,7 +16,7 @@ const routes: Routes = [
        { path: 'Task/:id', component: TaskFormComponent },
        { path: 'Tasks', component: TaskListComponent },
     ]
-  },
+    , canActivate:[AuthGuard]},
 
   { path: '**', component: AppComponent, pathMatch: 'full' },
 ];

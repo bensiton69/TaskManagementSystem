@@ -28,6 +28,7 @@ export class TaskFormComponent implements OnInit {
     description: "",
     status: 0,
     urgentLevel: 0,
+    ownerId: "90f19746-cda2-41d2-695a-08d9c482c6d1",
   };
   
   time = {}
@@ -77,8 +78,6 @@ export class TaskFormComponent implements OnInit {
   submit() {
     if (this.task.id) {
       this.taskService.update(this.task).subscribe(x => {
-        console.log(x);
-        console.log(this.task);
         this.toastr.success("Edited");
       });
     } else {
@@ -97,7 +96,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   getOwners() {
-    return this.accountService.getOwners();
+    return this.accountService.getUsers();
   }
 
   private setTask(task: Task) {

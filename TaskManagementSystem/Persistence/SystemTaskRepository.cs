@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Core;
 using TaskManagementSystem.Core.Models;
+using TaskManagementSystem.DTOs;
 using TaskManagementSystem.Extensions;
 
 namespace TaskManagementSystem.Persistence
@@ -12,9 +15,12 @@ namespace TaskManagementSystem.Persistence
     public class SystemTaskRepository : ISystemTaskRepository
     {
         private readonly DataContext _context;
-        public SystemTaskRepository(DataContext context)
+        private readonly IMapper _mapper;
+
+        public SystemTaskRepository(DataContext context, IMapper mapper)
         {
-            this._context = context;
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<SystemTask>  GetSystemTask(Guid id, bool includeRelated)
@@ -23,12 +29,6 @@ namespace TaskManagementSystem.Persistence
                 return await _context.SystemTasks.FindAsync(id);
 
             return await _context.SystemTasks.FindAsync(id);
-            //return await _context.SystemTasks
-            //    .Include(v => v.)
-            //    .ThenInclude(vf => vf.Feature)
-            //    .Include(v => v.Model)
-            //    .ThenInclude(m => m.Make)
-            //    .SingleOrDefaultAsync(v => v.Id == id);
         }
 
         public void Add(SystemTask systemTask)
@@ -41,22 +41,24 @@ namespace TaskManagementSystem.Persistence
             _context.Remove(systemTask);
         }
 
-        public async Task<QueryResult<SystemTask>> GetSystemTasks(SystemTaskQuery queryObj)
+        public async Task<QueryResult<TaskDto>> GetSystemTasks(SystemTaskQuery queryObj)
         {
             var result = new QueryResult<SystemTask>();
-            var query = _context.SystemTasks
+            var query = _context.SystemTasks.Include(s => s.Owner)
                 .AsQueryable();
-
+            //TODO parse?
             //Filtering
-            //if (queryObj.MakeId.HasValue)
-            //    query = query.Where(v => v.Model.MakeId == queryObj.MakeId.Value);
-
-            //if (queryObj.ModelId.HasValue)
-            //    query = query.Where(v => v.ModelId == queryObj.ModelId.Value);
+            if (String.IsNullOrEmpty(queryObj.UserName) == false)
+                query = query.Where(s => s.Owner.UserName == queryObj.UserName);
+            if (queryObj.UrgentLevel.HasValue)
+                query = query.Where(s => (int)s.UrgentLevel == queryObj.UrgentLevel.Value);
+            if (queryObj.Status.HasValue)
+                query = query.Where(s => (int)s.Status == queryObj.Status.Value);
 
             var columnsMap = new Dictionary<string, Expression<Func<SystemTask, object>>>()
             {
                 ["urgentLevel"] = st => st.UrgentLevel,
+                ["userName"] = st => st.Owner.UserName,
                 ["status"] = st => st.Status,
                 ["title"] = st => st.Title,
                 ["creationDate"] = st => st.CreationDateTime,
@@ -71,8 +73,10 @@ namespace TaskManagementSystem.Persistence
 
             result.Items = await query.ToListAsync();
 
-            return result;
+            
+            return _mapper.Map<QueryResult<SystemTask>, QueryResult<TaskDto>>(result);
         }
+
         public void UpdateTask(Guid id, SystemTask task)
         {
             _context.Entry(task).State = EntityState.Modified;
