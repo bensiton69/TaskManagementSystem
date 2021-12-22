@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
 
   @Output() cancelRegister = new EventEmitter();
   model: any = {}
-  explain: string = "You have to insert a valid email and A Strong password At least 8 charts with: One capital letter, One digit, One non-alphanumeric char."
+  explain: string = "You have to insert a valid username and A password"
 
   constructor(private accountService: AccountService, private toastr: ToastrService) { }
 
