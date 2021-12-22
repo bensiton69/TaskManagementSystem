@@ -6,7 +6,7 @@ namespace TaskManagementSystem.Core
 {
     public interface IUsersComparingService
     {
-        IEnumerable<RateObject<string>> CompareAppUsers(IEnumerable<AppUser> users, DateTime stratDateTime,
+        IEnumerable<RateObject<string>> CompareAppUsers(IEnumerable<AppUser> users, DateTime startDateTime,
             DateTime endDateTime);
     }
 }

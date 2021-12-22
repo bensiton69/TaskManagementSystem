@@ -17,6 +17,7 @@ namespace TaskManagementSystem.Controllers
         private readonly DataContext _context;
         private readonly IUsersComparingService _comparingService;
 
+
         public StatisticsController(DataContext context, IUsersComparingService comparingService)
         {
             _context = context;
@@ -24,16 +25,16 @@ namespace TaskManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetStatistics(DateTime stratDateTime, DateTime endDateTime)
+        public async Task<IActionResult> GetStatistics(DateTime startDateTime, DateTime endDateTime)
         {
-            // return number of done from user
+            // return number of done tasks from user
 
 
             List<AppUser> users = await _context.Users
                 .Include(u => u.SystemTasks)
                 .ToListAsync();
 
-            List<RateObject<string>> rateObjects = _comparingService.CompareAppUsers(users, stratDateTime, endDateTime).ToList();
+            List<RateObject<string>> rateObjects = _comparingService.CompareAppUsers(users, startDateTime, endDateTime).ToList();
 
             return Ok(rateObjects);
         }

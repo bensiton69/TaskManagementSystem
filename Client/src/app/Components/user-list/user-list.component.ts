@@ -10,16 +10,7 @@ import { TaskService } from 'src/app/Services/task.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
-  private readonly PAGE_SIZE = 3;
-  queryResult: any = {};
-  users: KeyValuePair[] = [];
-  model: any = {};
-  makes: KeyValuePair[];
-  query: any = {
-    pageSize: this.PAGE_SIZE
-  };
-
+  responce: any;
 
   columns = [
     { title: 'Place', key: 'place', isSortable: false },
@@ -38,50 +29,10 @@ export class UserListComponent implements OnInit {
   }
 
   getStats() {
-    this.statisticsService.getStats().subscribe(z => console.log(z))
+    this.statisticsService.getStats().subscribe(val => {
+      this.responce = val;
+      console.log(this.responce);
+    })
   }
 
-  getTasks() {
-    this.taskService.getTasks(this.query)
-      .subscribe(result => {
-        this.queryResult = result;
-      });
-  }
-
-
-  onFilterChange() {
-    this.query.page = 1;
-    this.getTasks();
-  }
-
-  resetFilter() {
-    this.query = {
-      page: 1,
-      pageSize: this.PAGE_SIZE
-    };
-    this.getTasks();
-  }
-
-  sortBy(columnName) {
-    if (this.query.sortBy === columnName) {
-      this.query.isSortAscending = !this.query.isSortAscending;
-    } else {
-      this.query.sortBy = columnName;
-      this.query.isSortAscending = !this.query.isSortAscending;
-    }
-    this.getTasks();
-  }
-
-  onPageChange(page) {
-    this.query.page = page;
-    this.getTasks();
-  }
-
-  getUsers() {
-    this.accountService.getUsers().subscribe(users => {
-      this.users = users;
-      console.log(users);
-    }
-    )
-  }
 }

@@ -102,6 +102,16 @@ namespace TaskManagementSystem.Controllers
         //    return Ok(result);
         //}
 
+        [HttpGet("TestDefault")]
+        public async Task<ActionResult> TestDefault(DateTime b,
+            DateTime ? a = null)
+        {
+            if (!a.HasValue)
+                a = DateTime.Now.AddDays(14);
+            return Ok(a);
+        }
+
+
         [HttpGet("TestMap")]
         public async Task<ActionResult> TestMap()
         {
